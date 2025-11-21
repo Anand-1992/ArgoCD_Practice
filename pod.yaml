@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp3
+  namespace: devproject
+  labels:
+    app: web3
+    env: dev3
+spec:
+  containers:
+    - name: webcon3
+      image: anandhakumarn/apple:v1
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+          name: apache
+          protocol: TCP
+      resources:
+        requests:
+          memory: "200Mi"
+          cpu: "200m"
+        limits:
+          memory: "300Mi"
+          cpu: "400m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: websvc3
+  namespace: devproject
+spec:
+  type: LoadBalancer
+  ports:
+    - name: apache
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: web3
+    env: dev3
+
+
